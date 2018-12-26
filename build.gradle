@@ -1,6 +1,7 @@
 plugins {
-    id 'java'
     id 'application'
+    id 'java'
+//    id 'java-library-distribution'
 }
 
 mainClassName = 'IntervalUpdater'
@@ -19,4 +20,14 @@ dependencies {
     compile group: 'org.jsoup', name: 'jsoup', version: '1.11.3'
     compile group: 'com.h2database', name: 'h2', version: '1.4.197'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'IntervalUpdater',
+                'Class-Path': configurations.runtime.files.collect { "lib/$it.name" }.join(' ')
+//                'Class-Path': configurations.compile.collect { it.getName() }.join(' ')
+        )
+    }
 }
