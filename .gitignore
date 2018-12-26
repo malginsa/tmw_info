@@ -1,0 +1,17 @@
+*.class
+*.jar
+*.war
+*.pdf
+*.log
+*~
+.metadata/.plugins/*
+/bin/
+.idea/*
+*.iml
+*/.idea/*
+build/*
+out/*
+.gradle/*
+gradle/*
+gradlew*
+*/.gradle/*
