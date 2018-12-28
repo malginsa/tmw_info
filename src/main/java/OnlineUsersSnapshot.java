@@ -23,7 +23,15 @@ public class OnlineUsersSnapshot {
             "Lempo", "Leraje", "Leraie", "Lilin", "Ljubi", "Lucifuge",
             "Maricha", "Morax", "Masih", "Marchosias", "Mastema", "Merihem",
             "Murmur", "Naamah", "Naberus", "Ninurta", "Namtar", "Onoskelis",
-            "Orias", "Oriax"
+            "Orias", "Oriax", "Orobas", "Ordog", "Otokata", "Paimon", "Pelesit",
+            "Phenex", "Penemue", "Pithius", "Pocong", "Pontianak", "Preta",
+            "Pruflas", "Puloman", "Rahab", "Ronove", "Rusalka", "Rakshasa",
+            "Rangda", "Sabnock", "Saleos", "Seir", "Semyaza", "Shedim",
+            "Sitri", "Sthenno", "Stihi", "Stolas", "Suanggi", "Surgat",
+            "Titivillus", "Toyol", "Tuchulcha", "Ziminiar", "Valac", "Valefar",
+            "Vapula", "Vassago", "Vepar", "Vine", "Wechuge", "Yeqon", "Zagan",
+            "Zepar",
+            "Skel-Mart", "Hyperspace", "Supply Store"
     );
 
     private List<String> users;

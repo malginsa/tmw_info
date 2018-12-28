@@ -1,10 +1,13 @@
 plugins {
-    id 'application'
     id 'java'
-//    id 'java-library-distribution'
+    id 'groovy'
+    id 'com.github.johnrengelman.shadow' version '4.0.3'
+    id 'application'
 }
 
-mainClassName = 'IntervalUpdater'
+application {
+    mainClassName = 'IntervalUpdater'
+}
 
 group 'themanaworld.org'
 version '1.0'
@@ -26,8 +29,6 @@ jar {
     manifest {
         attributes(
                 'Main-Class': 'IntervalUpdater',
-                'Class-Path': configurations.runtime.files.collect { "lib/$it.name" }.join(' ')
-//                'Class-Path': configurations.compile.collect { it.getName() }.join(' ')
         )
     }
 }

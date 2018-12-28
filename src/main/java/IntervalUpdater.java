@@ -1,6 +1,8 @@
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import static java.lang.Runtime.*;
+
 public class IntervalUpdater {
 
     private static final Logger LOG = LogManager.getLogger();
@@ -10,6 +12,7 @@ public class IntervalUpdater {
 
         OnlineUsersSupplier onlineUsersSupplier = new OnlineUsersSupplier();
         DAO dao = new DAO();
+        getRuntime().addShutdownHook(new Thread(dao::closeConnection));
         dao.establishDbConnection();
         dao.startDbServer();
 
@@ -25,6 +28,5 @@ public class IntervalUpdater {
             dao.storeSnapshot(snapshot);
             LOG.info(snapshot);
         }
-        dao.closeConnection();
     }
 }

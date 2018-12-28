@@ -34,15 +34,19 @@ public class DAO {
     public static final String DB_URL = "jdbc:h2:~/tmw_informer;AUTO_SERVER=TRUE;AUTO_SERVER_PORT=41444";
 
     private Connection connection;
+    private Server webServer;
+    private Server tcpServer;
 
     public void startDbServer() {
+        this.establishDbConnection();
         try {
-            Server.createWebServer("-webAllowOthers","-webPort","8082").start();
-            Server.createTcpServer("-tcpAllowOthers","-tcpPort","9092").start();
+            webServer = Server.createWebServer("-webAllowOthers", "-webPort", "8082");
+            webServer.start();
+            tcpServer = Server.createTcpServer("-tcpAllowOthers", "-tcpPort", "9092");
+            tcpServer.start();
         } catch (SQLException e) {
             LOG.error("Can't instantiate d2 database driver" + e);
         }
-        this.establishDbConnection();
     }
 
     public void establishDbConnection() {
@@ -69,11 +73,21 @@ public class DAO {
     }
 
     public void closeConnection() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            LOG.error("Can't close connection to DB" + e);
+        LOG.info("start closing dao resources");
+        if (webServer != null) {
+            webServer.stop();
         }
+        if (tcpServer != null) {
+            tcpServer.stop();
+        }
+        if (connection != null) {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                LOG.error("Can't close connection to DB" + e);
+            }
+        }
+        LOG.info("finished closing dao resources");
     }
 
     public void storeInterval(String user, LocalDateTime start, LocalDateTime end) {
