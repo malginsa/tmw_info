@@ -4,14 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserInfoStorage {
+public class OpenIntervalsKeeper {
 
     private final DAO dao;
     private final Map<String, LocalDateTime> startDateTime = new HashMap<>();
     private OnlineUsersSnapshot previousSnapshot;
 
-    public UserInfoStorage(DAO dao,
-                           OnlineUsersSnapshot snapshot) {
+    public OpenIntervalsKeeper(DAO dao,
+                               OnlineUsersSnapshot snapshot) {
         this.dao = dao;
         LocalDateTime dateTime = snapshot.getDateTime();
         previousSnapshot = snapshot;

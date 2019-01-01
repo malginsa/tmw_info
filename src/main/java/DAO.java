@@ -39,20 +39,14 @@ public class DAO {
     private Server webServer;
     private Server tcpServer;
 
-    public void startDbServerAndEstablishConnection() {
-        this.establishDbConnection();
-        try {
-            webServer = Server.createWebServer("-webAllowOthers", "-webPort", "8082");
-            webServer.start();
-            tcpServer = Server.createTcpServer("-tcpAllowOthers", "-tcpPort", "9092");
-            tcpServer.start();
-        } catch (SQLException e) {
-            LOG.error("Can't instantiate d2 database driver" + e);
-        }
+    public void init() {
+        establishConnection();
+        startWebAndTcpServers();
+        createSchemasIfNeeded();
         getRuntime().addShutdownHook(new Thread(() -> this.shutdown()));
     }
 
-    public void establishDbConnection() {
+    private void establishConnection() {
         try {
             Class.forName("org.h2.Driver").newInstance();
         } catch (InstantiationException e) {
@@ -75,7 +69,18 @@ public class DAO {
         }
     }
 
-    public void shutdown() {
+    private void startWebAndTcpServers() {
+        try {
+            webServer = Server.createWebServer("-webAllowOthers", "-webPort", "8082");
+            webServer.start();
+            tcpServer = Server.createTcpServer("-tcpAllowOthers", "-tcpPort", "9092");
+            tcpServer.start();
+        } catch (SQLException e) {
+            LOG.error("Can't instantiate d2 database driver" + e);
+        }
+    }
+
+    private void shutdown() {
         LOG.info("start shutting down dao resources");
         if (webServer != null) {
             webServer.stop();
@@ -119,7 +124,7 @@ public class DAO {
         }
     }
 
-    public void createSchemasIfNeeded() {
+    private void createSchemasIfNeeded() {
         Statement statement;
         try {
             statement = connection.createStatement();

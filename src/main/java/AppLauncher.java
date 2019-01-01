@@ -53,15 +53,14 @@ public class AppLauncher {
     public void launchIntervalUpdater() throws IOException, InterruptedException {
         OnlineUsersSupplier supplier = new OnlineUsersSupplier();
         DAO dao = new DAO();
-        dao.startDbServerAndEstablishConnection();
-        dao.createSchemasIfNeeded();
-        UserInfoStorage userInfoStorage = new UserInfoStorage(
+        dao.init();
+        OpenIntervalsKeeper openIntervalsKeeper = new OpenIntervalsKeeper(
                 dao, supplier.getSnapshotNow());
 
-        while (userInfoStorage != null) {
-            Thread.sleep(SCANNNING_INTERVAL);
+        while (openIntervalsKeeper != null) {
+            Thread.sleep(SCANNNING_INTERVAL); // TODO: refactor it using scheduler
             OnlineUsersSnapshot snapshot = supplier.getSnapshotNow();
-            userInfoStorage.processNextSnapshot(snapshot);
+            openIntervalsKeeper.processNextSnapshot(snapshot);
             dao.storeSnapshot(snapshot);
             LOG.info(snapshot);
         }
