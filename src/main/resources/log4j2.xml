@@ -4,14 +4,18 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
-        <File name="tmw_info-all" fileName="tmw_info-all.log" append="false">
+        <File name="tmw_info-all" fileName="log/tmw_info-all.log" append="false">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+        <File name="tmw_info-snapshot" fileName="log/tmw_info-snapshot.log" append="false">
+            <PatternLayout pattern="%msg%n"/>
         </File>
     </Appenders>
     <Loggers>
         <Root level="ALL">
             <AppenderRef ref="Console" level="ERROR"/>
             <AppenderRef ref="tmw_info-all" level="ALL"/>
+            <AppenderRef ref="tmw_info-snapshot" level="INFO"/>
         </Root>
     </Loggers>
 </Configuration>
