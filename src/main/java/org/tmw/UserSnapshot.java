@@ -1,3 +1,5 @@
+package org.tmw;
+
 import java.sql.Timestamp;
 
 public class UserSnapshot {
@@ -28,7 +30,7 @@ public class UserSnapshot {
 
     @Override
     public String toString() {
-        return "UserSnapshot{" +
+        return "org.tmw.UserSnapshot{" +
                 "userName='" + userName + '\'' +
                 ", timestamp=" + timestamp +
                 "}\n";
