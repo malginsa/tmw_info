@@ -1,8 +1,8 @@
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -10,7 +10,7 @@ import static java.lang.Runtime.getRuntime;
 
 public class AppLauncher {
 
-    private static final Logger LOG = LogManager.getLogger();
+    private static final Logger LOG = LoggerFactory.getLogger(AppLauncher.class);
 
     public static final int SCANNNING_INTERVAL = 9_000;
 
@@ -62,7 +62,7 @@ public class AppLauncher {
             OnlineUsersSnapshot snapshot = supplier.getSnapshotNow();
             openIntervalsKeeper.processNextSnapshot(snapshot);
             dao.storeSnapshot(snapshot);
-            LOG.info(snapshot);
+            LOG.info(snapshot.toString());
         }
     }
 

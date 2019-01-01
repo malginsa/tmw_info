@@ -1,6 +1,6 @@
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.h2.tools.Server;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,7 +14,7 @@ import static java.lang.Runtime.getRuntime;
 
 public class DAO {
 
-    private static final Logger LOG = LogManager.getLogger();
+    private static final Logger LOG = LoggerFactory.getLogger(DAO.class);
     private static final String INSERT_INTERVAL =
             "INSERT INTO interval(username, start, end) VALUES (?, ?, ?)";
     private static final String INSERT_SNAPSHOT =
