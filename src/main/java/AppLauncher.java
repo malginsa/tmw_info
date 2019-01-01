@@ -12,12 +12,15 @@ public class AppLauncher {
 
     private static final Logger LOG = LogManager.getLogger();
 
+    public static final int SCANNNING_INTERVAL = 9_000;
+
     public static void main(String[] args) throws IOException, InterruptedException {
-        startJetty();
-//        new IntervalUpdater().launch();
+        AppLauncher appLauncher = new AppLauncher();
+        appLauncher.startWebServer();
+        appLauncher.launchIntervalUpdater();
     }
 
-    private static void startJetty() {
+    private void startWebServer() {
         Server server = new Server();
 
         SelectChannelConnector connector = new SelectChannelConnector();
@@ -46,4 +49,22 @@ public class AppLauncher {
             }
         }));
     }
+
+    public void launchIntervalUpdater() throws IOException, InterruptedException {
+        OnlineUsersSupplier supplier = new OnlineUsersSupplier();
+        DAO dao = new DAO();
+        dao.startDbServerAndEstablishConnection();
+        dao.createSchemasIfNeeded();
+        UserInfoStorage userInfoStorage = new UserInfoStorage(
+                dao, supplier.getSnapshotNow());
+
+        while (userInfoStorage != null) {
+            Thread.sleep(SCANNNING_INTERVAL);
+            OnlineUsersSnapshot snapshot = supplier.getSnapshotNow();
+            userInfoStorage.processNextSnapshot(snapshot);
+            dao.storeSnapshot(snapshot);
+            LOG.info(snapshot);
+        }
+    }
+
 }
