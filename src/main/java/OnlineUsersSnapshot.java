@@ -4,7 +4,7 @@ import java.util.List;
 
 public class OnlineUsersSnapshot {
 
-    static final List<String> IGNORABLE_USERS = Arrays.asList(
+    static final List<String> PATEAME_BOTS = Arrays.asList(
             "Corson", "Bukavac", "playerone", "Aamon", "Abezethibou",
             "Abraxax", "Abyzou", "Adrammelech", "Aeshma", "Agaliarept",
             "Agrat", "Agiel", "Haborym", "Alloces", "Allu", "Amaymon",
@@ -30,16 +30,22 @@ public class OnlineUsersSnapshot {
             "Sitri", "Sthenno", "Stihi", "Stolas", "Suanggi", "Surgat",
             "Titivillus", "Toyol", "Tuchulcha", "Ziminiar", "Valac", "Valefar",
             "Vapula", "Vassago", "Vepar", "Vine", "Wechuge", "Yeqon", "Zagan",
-            "Zepar",
-            "Skel-Mart", "Hyperspace", "Supply Store"
-    );
+            "Zepar");
+
+    static final List<String> USERS_TRADE_BOTS = Arrays.asList(
+            "Skel-Mart", "Supply Store");
+
+    static final List<String> PASSIVE_USERS = Arrays.asList(
+            "Hyperspace");
+
 
     private List<String> users;
 
     private LocalDateTime dateTime;
 
     public OnlineUsersSnapshot removeBots() {
-        this.getUsers().removeAll(IGNORABLE_USERS);
+        this.getUsers().removeAll(USERS_TRADE_BOTS);
+        this.getUsers().removeAll(PASSIVE_USERS);
         return this;
     }
 
