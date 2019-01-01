@@ -1,7 +1,7 @@
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static java.lang.Runtime.*;
+import java.io.IOException;
 
 public class IntervalUpdater {
 
@@ -12,10 +12,7 @@ public class IntervalUpdater {
 
         OnlineUsersSupplier onlineUsersSupplier = new OnlineUsersSupplier();
         DAO dao = new DAO();
-        getRuntime().addShutdownHook(new Thread(dao::closeConnection));
-        dao.establishDbConnection();
-        dao.startDbServer();
-
+        dao.startDbServerAndEstablishConnection();
         dao.createSchemasIfNeeded();
         UserInfoStorage userInfoStorage = new UserInfoStorage(
                 dao, onlineUsersSupplier.getSnapshotNow());

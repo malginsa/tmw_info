@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+import static java.lang.Runtime.getRuntime;
+
 public class DAO {
 
     private static final Logger LOG = LogManager.getLogger();
@@ -37,7 +39,7 @@ public class DAO {
     private Server webServer;
     private Server tcpServer;
 
-    public void startDbServer() {
+    public void startDbServerAndEstablishConnection() {
         this.establishDbConnection();
         try {
             webServer = Server.createWebServer("-webAllowOthers", "-webPort", "8082");
@@ -47,6 +49,7 @@ public class DAO {
         } catch (SQLException e) {
             LOG.error("Can't instantiate d2 database driver" + e);
         }
+        getRuntime().addShutdownHook(new Thread(() -> this.shutdown()));
     }
 
     public void establishDbConnection() {
@@ -72,8 +75,8 @@ public class DAO {
         }
     }
 
-    public void closeConnection() {
-        LOG.info("start closing dao resources");
+    public void shutdown() {
+        LOG.info("start shutting down dao resources");
         if (webServer != null) {
             webServer.stop();
         }
@@ -87,7 +90,7 @@ public class DAO {
                 LOG.error("Can't close connection to DB" + e);
             }
         }
-        LOG.info("finished closing dao resources");
+        LOG.info("finished shutting down dao resources");
     }
 
     public void storeInterval(String user, LocalDateTime start, LocalDateTime end) {
