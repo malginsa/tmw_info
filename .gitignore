@@ -3,6 +3,7 @@
 *.war
 *.pdf
 *.log
+log/*
 *~
 .metadata/.plugins/*
 /bin/

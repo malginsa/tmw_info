@@ -1,21 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Configuration>
+
     <Appenders>
+
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
-        <File name="tmw_info-all" fileName="log/tmw_info-all.log" append="false">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
-        </File>
-        <File name="tmw_info-snapshot" fileName="log/tmw_info-snapshot.log" append="false">
+
+        <RollingFile name="general">
+            <FileName>"log/general.log"</FileName>>
+            <FilePattern>log/general/%d{yyyy-MM-dd-hh}.log.zip</FilePattern>
+            <PatternLayout pattern="%d{mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+            <DefaultRolloverStrategy max="24"/>
+        </RollingFile>
+
+        <RollingFile name="request">
+            <FileName>"log/request.log"</FileName>>
+            <FilePattern>log/request/%d{yyyy-MM-dd-hh-mm}.log.zip</FilePattern>
+            <PatternLayout pattern="%d{mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+            <DefaultRolloverStrategy max="24"/>
+        </RollingFile>
+
+        <File name="snapshot" fileName="log/snapshot.log" append="false">
             <PatternLayout pattern="%msg%n"/>
         </File>
+
     </Appenders>
+
     <Loggers>
+
         <Root level="ALL">
             <AppenderRef ref="Console" level="ERROR"/>
-            <AppenderRef ref="tmw_info-all" level="ALL"/>
-            <AppenderRef ref="tmw_info-snapshot" level="INFO"/>
+            <AppenderRef ref="general" level="ALL"/>
+            <AppenderRef ref="snapshot" level="INFO"/>
         </Root>
+
+        <Logger name="requestLogger" level="INFO">
+            <AppenderRef ref="request"/>
+        </Logger>
+
     </Loggers>
+
 </Configuration>
