@@ -9,7 +9,7 @@ application {
     mainClassName = 'IntervalUpdater'
 }
 
-group 'themanaworld.org'
+group 'tmw.org'
 version '1.0'
 
 sourceCompatibility = 1.8
