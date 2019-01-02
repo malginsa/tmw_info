@@ -9,7 +9,6 @@ application {
     mainClassName = 'org.tmw.AppLauncher'
 }
 
-//group 'org.tmw'
 version '1.0'
 
 sourceCompatibility = 1.8
@@ -37,12 +36,5 @@ dependencies {
 //    compile group: 'com.sun.jersey', name: 'jersey-core', version: '1.18'
 //    compile group: 'com.sun.jersey', name: 'jersey-server', version: '1.18'
 //    compile group: 'com.sun.jersey', name: 'jersey-json', version: '1.18'
-}
 
-jar {
-    manifest {
-        attributes(
-                'Main-Class': 'AppLauncher',
-        )
-    }
 }
