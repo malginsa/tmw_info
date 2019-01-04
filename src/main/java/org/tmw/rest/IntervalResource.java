@@ -1,8 +1,8 @@
 package org.tmw.rest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.tmw.model.Interval;
 import org.tmw.service.IntervalService;
-import org.tmw.service.IntervalServiceImpl;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -14,9 +14,10 @@ import static java.util.Arrays.asList;
 
 @Path("interval")
 @Produces("application/json")
-public class IntervalResource {
+public class IntervalResource extends SpringAwareResource {
 
-    private IntervalService intervalService = new IntervalServiceImpl();
+    @Autowired
+    private IntervalService intervalService;
 
     @GET
     public List<Interval> getSampleIntervals() {

@@ -37,4 +37,6 @@ dependencies {
     compile group: 'com.sun.jersey', name: 'jersey-server', version: '1.8'
     compile group: 'com.sun.jersey', name: 'jersey-json', version: '1.8'
 
+    compile group: 'org.springframework', name: 'spring-beans', version: '4.0+'
+    compile group: 'org.springframework', name: 'spring-web', version: '4.0+'
 }
