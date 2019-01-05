@@ -5,9 +5,8 @@ plugins {
     id 'application'
 }
 
-application {
-    mainClassName = 'org.tmw.AppLauncher'
-}
+apply plugin: 'application'
+mainClassName = 'org.tmw.AppLauncher'
 
 version '1.0'
 
@@ -20,11 +19,14 @@ repositories {
 dependencies {
 
     testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.23+'
 
     compile 'org.jsoup:jsoup:1.11.3'
 
     compile 'com.h2database:h2:1.4.197'
+    compile 'org.apache.commons:commons-dbcp2:2.5.0'
 
+//    TODO Jetty -> Netty
     compile 'org.eclipse.jetty:jetty-server:8.0+'
     compile 'org.eclipse.jetty:jetty-webapp:8.0+'
     compile 'org.eclipse.jetty:jetty-plus:8.0+'
