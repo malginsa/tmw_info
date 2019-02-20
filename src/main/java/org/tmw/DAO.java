@@ -3,7 +3,9 @@ package org.tmw;
 import org.h2.tools.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
+import javax.annotation.PostConstruct;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 
 import static java.lang.Runtime.getRuntime;
 
+@Repository
 public class DAO {
 
     private static final Logger LOG = LoggerFactory.getLogger(DAO.class);
@@ -41,6 +44,11 @@ public class DAO {
     private Server webServer;
     private Server tcpServer;
 
+    public DAO() {
+        System.out.println("DAO " + this.toString() + " is created");
+    }
+
+    @PostConstruct
     public void init() {
         establishConnection();
         startWebAndTcpServers();

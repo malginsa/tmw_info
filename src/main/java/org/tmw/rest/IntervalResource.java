@@ -6,6 +6,7 @@ import org.tmw.service.IntervalService;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,13 +21,8 @@ public class IntervalResource extends SpringAwareResource {
     private IntervalService intervalService;
 
     @GET
-    public List<Interval> getSampleIntervals() {
-        return asList( new Interval("user1", LocalDateTime.now().minusHours(2), LocalDateTime.now()));
-    }
-
-    @GET
-    @Path("Nced")
-    public List<Interval> getNcedIntervals() {
-        return intervalService.getIntervals("Nced");
+    @Path("/{username}")
+    public List<Interval> getSampleIntervals(@PathParam("username") String username) {
+        return intervalService.getIntervals(username);
     }
 }

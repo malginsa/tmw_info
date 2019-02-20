@@ -42,3 +42,9 @@ dependencies {
     compile 'org.springframework:spring-beans:4.0+'
     compile 'org.springframework:spring-web:4.0+'
 }
+
+//SourceSets {
+//    main {
+//        compileClasspath += 'src/main/webapp/WEB-INF'
+//    }
+//}

@@ -1,20 +1,29 @@
 package org.tmw;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Component
 public class OpenIntervalsKeeper {
 
-    private final DAO dao;
+    @Autowired
+    private DAO dao;
+
     private final Map<String, LocalDateTime> startDateTime = new HashMap<>();
     private OnlineUsersSnapshot previousSnapshot;
 
-    public OpenIntervalsKeeper(DAO dao,
-                               OnlineUsersSnapshot snapshot) {
-        this.dao = dao;
+    public OpenIntervalsKeeper() {
+        System.out.println("OpenInervalsKeeper " + this.toString() + " is created");
+    }
+
+    public void setStartSnaphot(OnlineUsersSnapshot snapshot) {
         LocalDateTime dateTime = snapshot.getDateTime();
         previousSnapshot = snapshot;
         for (String user : snapshot.getUsers()) {
@@ -29,6 +38,7 @@ public class OpenIntervalsKeeper {
         for (String logOffUser : logOffUsers) {
             startDateTime.remove(logOffUser);
         }
+        dao.storeSnapshot(newSnapshot);
         previousSnapshot = newSnapshot;
     }
 

@@ -1,4 +1,4 @@
-package org.tmw;
+package org.tmw.web;
 
 import org.slf4j.bridge.SLF4JBridgeHandler;
 
